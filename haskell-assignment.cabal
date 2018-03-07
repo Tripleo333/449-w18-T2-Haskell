@@ -1,0 +1,63 @@
+-- This file has been generated from package.yaml by hpack version 0.20.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 454a9e64d688d126becedb6f92a5cb47e5840725bc4b4412f5ca351be1f8b641
+
+name:           haskell-assignment
+version:        0.1.0.0
+description:    Please see the README on Github at <https://github.com/AnaScarlet/helloworld#readme>
+homepage:       https://github.com/Tripleo333/449-w18-T2-Haskell#readme
+bug-reports:    https://github.com/Tripleo333/449-w18-T2-Haskell/issues
+author:         Omar, Ben, Anastasiya, Joseph, Ummey, Joel
+maintainer:     laz1anastasiya@gmail.com
+copyright:      Copyright (c) 2018 Omar, Ben, Anastasiya, Joseph, Ummey, Joel
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    ChangeLog.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/Tripleo333/449-w18-T2-Haskell
+
+library
+  hs-source-dirs:
+      src
+  build-depends:
+      ListTree
+    , base >=4.7 && <5
+  exposed-modules:
+      Constraints
+  other-modules:
+      Paths_haskell_assignment
+  default-language: Haskell2010
+
+executable haskell-proj-exe
+  main-is: Main.hs
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      ListTree
+    , base >=4.7 && <5
+  other-modules:
+      Paths_haskell_assignment
+  default-language: Haskell2010
+
+test-suite haskell-proj-test
+  type: exitcode-stdio-1.0
+  main-is: Testy.hs
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      ListTree
+    , base >=4.7 && <5
+  other-modules:
+      Paths_haskell_assignment
+  default-language: Haskell2010
