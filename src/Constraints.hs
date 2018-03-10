@@ -45,21 +45,23 @@ meetsTnt :: [(Char,Char)] -> [Char] -> Bool
 -- takes a list of pairs of tasks and a tuple of two nearby tasks and returns a boolean
 iterTnt :: [(Char, Char)] -> (Char, Char) -> Bool
 
-meetsTnt list [] = True
-meetsTnt list (t1 : t2 : tasks) = iterTnt list (t1,t2) && meetsTnt list (t2 : tasks)
+meetsTnt list all@(t1 : tasks) = meetsTnt1 list all t1
 
---meetsTnt list ((m1,t1) : (m2,t2) : pairs) = iterTnt list (t1,t2) && meetsTnt list ((m2,t2) : pairs)
+meetsTnt1 list [] t0 = True
+meetsTnt1 list [t] t0 = iterTnt list (t,t0) && iterTnt list (t0,t)
+meetsTnt1 list (t1 : t2 : tasks) t0 = iterTnt list (t1,t2) && meetsTnt1 list (t2 : tasks) t0
 
-iterTnt [] (t1,t2) = True
+
+iterTnt [] pair = True
 iterTnt ((t1, t2):pairs) (t1', t2')
   | t1 == t1' && t2 == t2' = False
   | otherwise = iterTnt pairs (t1', t2')
 
 
 -- returns the total penalty value so far
-calcPenalty :: [[Int]] -> [(Char, Char)] -> Int
+calcPenalty :: Int -> [[Int]] -> [(Char, Char, Int)] -> [Char] -> Int
 
-calcPenalty list state = 0
+calcPenalty mach mp tnp state = calcMp mach mp state + calcTnp tnp state
 
 calcMp :: Int -> [[Int]] -> [Char] -> Int
 
@@ -71,12 +73,17 @@ calcMp n mp state
 -- takes a list of triplets (tnp) and the state and returns the penalty value
 calcTnp :: [(Char, Char, Int)] -> [Char] -> Int
 
-calcTnp list [] = 0
-calcTnp list ('X' : tasks) = 0
-calcTnp list (t1 : t2 : tasks) = iterTnp list (t1,t2) + calcTnp list (t2 : tasks)
+calcTnp list all@(t1 : tasks) = calcTnp1 list all t1
+
+calcTnp1 list [] t0 = 0
+calcTnp1 list [t] t0 = iterTnp list (t,t0) + iterTnp list (t0,t)
+calcTnp1 list ('X' : tasks) t0 = 0
+calcTnp1 list (a : 'X' : tasks) t0 = 0
+calcTnp1 list (t1 : t2 : tasks) t0 = iterTnp list (t1,t2) + calcTnp1 list (t2 : tasks) t0
 
 iterTnp :: [(Char,Char,Int)] -> (Char,Char) -> Int
 
+iterTnp [] pair = 0
 iterTnp ((t1, t2, p):triplets) (t1', t2')
   | t1 == t1' && t2 == t2' = p
   | otherwise = iterTnp triplets (t1', t2')
