@@ -1,53 +1,106 @@
 name:                haskell-assignment
+
 version:             0.1.0.0
+
 github:              "Tripleo333/449-w18-T2-Haskell"
+
 license:             BSD3
+
 author:              "Omar, Ben, Anastasiya, Joseph, Ummey, Joel"
+
 maintainer:          "laz1anastasiya@gmail.com"
+
 copyright:           "Copyright (c) 2018 Omar, Ben, Anastasiya, Joseph, Ummey, Joel"
 
+
+
+
 extra-source-files:
+
 - README.md
+
 - ChangeLog.md
 
 # Metadata used when publishing your package
+
 # synopsis:            Short description of your package
+
 # category:            myCategory
 
+
+
 # To avoid duplicated efforts in documentation and dealing with the
+
 # complications of embedding Haddock markup inside cabal files, it is
+
 # common to point users to the README.md file.
 description:         Please see the README on Github at <https://github.com/AnaScarlet/helloworld#readme>
 
+
+
 dependencies:
+
 - base >= 4.7 && < 5
+
 #- directory (>=1.0 && <2.0)
+
 #- filepath (>=1.1 && <2.0)
+
 #- List (>=0.4.0)
+
 #- transformers (>=0.2)
+
 - ListTree
+
 - regex-posix
 
+
+- hspec
+- HUnit
+- hspec-expectations
+
+
 library:
+
   source-dirs: src
 
+
+
 executables:
+
   haskell-proj-exe:
-    main:                Main.hs
-    source-dirs:         app
+
+    main:                 Main.hs
+
+    source-dirs:         
+    - app
+    - src
     ghc-options:
+
     - -threaded
+
     - -rtsopts
+
     - -with-rtsopts=-N
+
     dependencies:
 
 
 tests:
+
   haskell-proj-test:
+
     main:                Testy.hs
-    source-dirs:         test
+
+    source-dirs:
+    - test
+    - src
     ghc-options:
+
     - -threaded
+
     - -rtsopts
+
     - -with-rtsopts=-N
+
     dependencies:
