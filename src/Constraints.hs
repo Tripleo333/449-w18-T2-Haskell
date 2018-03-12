@@ -59,7 +59,7 @@ iterTnt ((t1, t2):pairs) (t1', t2')
 calcPenalty :: [[Int]] -> [(Char, Char, Int)] -> [Char] -> Int
 calcPenalty mp tnp state = calcMp mp state + calcTnp tnp state
 
--- old single machine calc -- calcMp :: Int -> [[Int]] -> [Char] -> Int
+-- old single machine calc -- calcMp :: Int -> [[Int]] -> [Char] -> Int  -- calculates penalty for one machine
                            -- calcMp n mp state
                            --  | state !! n == 'X' = 0
                            --  | otherwise = mp !! n !! (ord (state !! n ) - 65)
