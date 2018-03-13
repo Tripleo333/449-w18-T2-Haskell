@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 454a9e64d688d126becedb6f92a5cb47e5840725bc4b4412f5ca351be1f8b641
+-- hash: 4e7f06f42f3f5aae429b50e482bab7ddf2caf81a38f1532aaedddef9b19b313e
 
 name:           haskell-assignment
 version:        0.1.0.0
@@ -29,8 +29,12 @@ library
   hs-source-dirs:
       src
   build-depends:
-      ListTree
+      HUnit
+    , ListTree
     , base >=4.7 && <5
+    , hspec
+    , hspec-expectations
+    , regex-posix
   exposed-modules:
       Constraints
   other-modules:
@@ -41,11 +45,17 @@ executable haskell-proj-exe
   main-is: Main.hs
   hs-source-dirs:
       app
+      src
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      ListTree
+      HUnit
+    , ListTree
     , base >=4.7 && <5
+    , hspec
+    , hspec-expectations
+    , regex-posix
   other-modules:
+      Constraints
       Paths_haskell_assignment
   default-language: Haskell2010
 
@@ -54,10 +64,16 @@ test-suite haskell-proj-test
   main-is: Testy.hs
   hs-source-dirs:
       test
+      src
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      ListTree
+      HUnit
+    , ListTree
     , base >=4.7 && <5
+    , hspec
+    , hspec-expectations
+    , regex-posix
   other-modules:
+      Constraints
       Paths_haskell_assignment
   default-language: Haskell2010
