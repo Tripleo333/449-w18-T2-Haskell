@@ -5,6 +5,17 @@ import Data.List.Tree
 import Data.Maybe
 import Data.List
 
+--constraints data type
+
+data ConstraintTup = ConstraintTup {
+  fPA :: [(Int,Char)],
+  fM :: [(Int, Char)],
+  tNt :: [(Char,Char)],
+  mP :: [[Int]],
+  tNP :: [(Char, Char, Int)],
+  error :: [String]
+} deriving (Show)
+
 
 --x = branchAndBound x y
 
