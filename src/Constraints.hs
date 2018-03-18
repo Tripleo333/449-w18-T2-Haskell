@@ -1,12 +1,9 @@
 module Constraints where
 
 import Data.Char
-
-import Data.Maybe
 import Data.List
 
---constraints data type
-
+-- constraints data type
 data ConstraintTup = ConstraintTup {
   fPA :: [(Int,Char)],
   fM :: [(Int, Char)],
@@ -17,8 +14,8 @@ data ConstraintTup = ConstraintTup {
 } deriving (Show)
 
 
---x = branchAndBound x y
-
+-- returns True if the state meets all hard constraints, returns False if the state does not meet
+-- at least one of the hard constraints
 meetsHardConstr :: [(Int,Char)] -> [(Int,Char)] -> [(Char,Char)] -> [Char] -> Bool
 meetsHardConstr fpa fm tnt state = iterState fpa fm state && meetsTnt tnt state
 
@@ -26,7 +23,6 @@ meetsHardConstr fpa fm tnt state = iterState fpa fm state && meetsTnt tnt state
 -- takes the fpa, fm, and the state
 iterState :: [(Int,Char)] -> [(Int,Char)] -> [Char] -> Bool
 iterState fpa fm [] = True
--- iterState fpa fm all@(t:tasks) = meetsFpa fpa (fromJust $ elemIndex t all , t) && meetsFm fm (fromJust $ elemIndex t all , t) && iterState fpa fm tasks
 iterState fpa fm state = and [meetsFpa fpa x | x <- (zip [0..7] state)] && and [meetsFm fm x | x <- (zip [0..7] state)]
 
 
@@ -57,7 +53,6 @@ meetsTnt1 list [] t0 = True
 meetsTnt1 list [t] t0 = iterTnt list (t,t0) -- && iterTnt list (t0,t)
 meetsTnt1 list (t1 : t2 : tasks) t0 = iterTnt list (t1,t2) && meetsTnt1 list (t2 : tasks) t0
 
-
 -- takes a list of pairs of tasks and a tuple of two nearby tasks and returns a boolean
 iterTnt :: [(Char, Char)] -> (Char, Char) -> Bool
 iterTnt [] pair = True
@@ -66,16 +61,10 @@ iterTnt ((t1, t2):pairs) (t1', t2')
   | otherwise = iterTnt pairs (t1', t2')
 
 
--- returns the total penalty value so far
---old single machine calc --calcPenalty :: Int -> [[Int]] -> [(Char, Char, Int)] -> [Char] -> Int
-                          --calcPenalty mach mp tnp state = calcMp mach mp state + calcTnp tnp state
+-- returns the total penalty value so far (for the state passed in as parameter)
 calcPenalty :: [[Int]] -> [(Char, Char, Int)] -> [Char] -> Int
 calcPenalty mp tnp state = calcMp mp state + calcTnp tnp state
 
--- old single machine calc -- calcMp :: Int -> [[Int]] -> [Char] -> Int  -- calculates penalty for one machine
-                           -- calcMp n mp state
-                           --  | state !! n == 'X' = 0
-                           --  | otherwise = mp !! n !! (ord (state !! n ) - 65)
 -- calculates total Machine Penalty
 -- requires full state, filled with 'X's or an actual state
 calcMp :: [[Int]] -> [Char] -> Int
@@ -88,15 +77,16 @@ calcMp (x:mp) (y:state)
 
 -- takes a list of triplets (tnp) and the state and returns the penalty value
 calcTnp :: [(Char, Char, Int)] -> [Char] -> Int
+-- pass around the first task to compare it to the last
 calcTnp list all@(t1 : tasks) = calcTnp1 list all t1
 
+-- calculates the too-near penalty associated with the given state and tnp
 calcTnp1 list [] t0 = 0
 calcTnp1 list [t] t0 = iterTnp list (t,t0) -- + iterTnp list (t0,t)
 calcTnp1 list ('X' : tasks) t0 = calcTnp1 list tasks t0
--- not sure what this was for
-                -- calcTnp1 list (a : 'X' : tasks) t0 = calcTnp1 list tasks 
 calcTnp1 list (t1 : t2 : tasks) t0 = iterTnp list (t1,t2) + calcTnp1 list (t2 : tasks) t0
 
+-- returns the penalty associated with the given tnp and the pair of neighboring tasks
 iterTnp :: [(Char,Char,Int)] -> (Char,Char) -> Int
 iterTnp [] pair = 0
 iterTnp ((t1, t2, p):triplets) (t1', t2')
