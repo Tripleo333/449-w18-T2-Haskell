@@ -32,7 +32,7 @@
 
 #  location: "./custom-snapshot.yaml"
 
-resolver: lts-10.8
+resolver: lts-10.8  # change this to match linux servers....
 
 
 
@@ -80,8 +80,7 @@ packages:
 
 # (e.g., acme-missiles-0.3)
 
-extra-deps: [ListTree-0.2.3, regex-posix-0.95.2, hspec-2.4.4, HUnit-1.6.0.0, hspec-expectations-0.8.2]
-
+extra-deps: [regex-posix-0.95.2, hspec-2.4.4, HUnit-1.6.0.0, hspec-expectations-0.8.2]
 
 
 
