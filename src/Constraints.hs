@@ -9,14 +9,15 @@ data ConstraintTup = ConstraintTup {
   fM :: [(Int, Char)],
   tNt :: [(Char,Char)],
   mP :: [[Int]],
-  tNP :: [(Char, Char, Int)],
-  error :: [String]
+  tNP :: [(Char, Char, Int)]
+--  error :: [String]
 } deriving (Show)
 
 
 -- returns True if the state meets all hard constraints, returns False if the state does not meet
 -- at least one of the hard constraints
 meetsHardConstr :: [(Int,Char)] -> [(Int,Char)] -> [(Char,Char)] -> [Char] -> Bool
+meetsHardConstr fpa fm tnt "XXXXXXXX" = True
 meetsHardConstr fpa fm tnt state = iterState fpa fm state && meetsTnt tnt state
 
 
@@ -30,6 +31,7 @@ iterState fpa fm state = and [meetsFpa fpa x | x <- (zip [0..7] state)] && and [
 -- and the current pair (mach,task) and returns a Bool
 meetsFpa :: [(Int,Char)] -> (Int,Char) -> Bool
 meetsFpa [] pair = True
+meetsFpa x (_,'X') = True
 meetsFpa ((m,t):pairs) (mach,task)
   | (m == mach && t /= task) || (m /= mach && t == task) = False
   | otherwise = meetsFpa pairs (mach,task)
@@ -63,13 +65,14 @@ iterTnt ((t1, t2):pairs) (t1', t2')
 
 -- returns the total penalty value so far (for the state passed in as parameter)
 calcPenalty :: [[Int]] -> [(Char, Char, Int)] -> [Char] -> Int
+calcPenalty mp tnp "XXXXXXXX" = maxBound :: Int
 calcPenalty mp tnp state = calcMp mp state + calcTnp tnp state
 
 -- calculates total Machine Penalty
 -- requires full state, filled with 'X's or an actual state
 calcMp :: [[Int]] -> [Char] -> Int
 calcMp _ [] = 0
-calcMp (x:mp) (y:state) 
+calcMp (x:mp) (y:state)
   | y == 'X' && (length state > 0) = calcMp mp state
   | y == 'X' = 0
   | otherwise = x !! (ord y - 65) + calcMp mp state
@@ -92,4 +95,3 @@ iterTnp [] pair = 0
 iterTnp ((t1, t2, p):triplets) (t1', t2')
   | t1 == t1' && t2 == t2' = p
   | otherwise = iterTnp triplets (t1', t2')
-
