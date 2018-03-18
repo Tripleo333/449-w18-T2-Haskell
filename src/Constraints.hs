@@ -1,7 +1,7 @@
 module Constraints where
 
 import Data.Char
-import Data.List.Tree
+
 import Data.Maybe
 import Data.List
 
@@ -26,7 +26,8 @@ meetsHardConstr fpa fm tnt state = iterState fpa fm state && meetsTnt tnt state
 -- takes the fpa, fm, and the state
 iterState :: [(Int,Char)] -> [(Int,Char)] -> [Char] -> Bool
 iterState fpa fm [] = True
-iterState fpa fm all@(t:tasks) = meetsFpa fpa (fromJust $ elemIndex t all , t) && meetsFm fm (fromJust $ elemIndex t all , t) && iterState fpa fm tasks
+-- iterState fpa fm all@(t:tasks) = meetsFpa fpa (fromJust $ elemIndex t all , t) && meetsFm fm (fromJust $ elemIndex t all , t) && iterState fpa fm tasks
+iterState fpa fm state = and [meetsFpa fpa x | x <- (zip [0..7] state)] && and [meetsFm fm x | x <- (zip [0..7] state)]
 
 
 -- takes a list of pairs (mach, task) from forced partial assignment input
@@ -49,6 +50,7 @@ meetsFm ((m,t):pairs) (mach,task)
 
 -- takes a list of pairs and the state and returns a boolean
 meetsTnt :: [(Char,Char)] -> [Char] -> Bool
+meetsTnt [] _ = True
 meetsTnt list all@(t1 : tasks) = meetsTnt1 list all t1
 
 meetsTnt1 list [] t0 = True
@@ -100,5 +102,4 @@ iterTnp [] pair = 0
 iterTnp ((t1, t2, p):triplets) (t1', t2')
   | t1 == t1' && t2 == t2' = p
   | otherwise = iterTnp triplets (t1', t2')
-
 
