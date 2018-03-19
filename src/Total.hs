@@ -10,55 +10,55 @@ total x 0 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 	|	verifyBlank (x !! y) = total (x) 0 (y + 1) z
 	|	verifyName (x !! y) = total (x) 1 (y + 1) z
-  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
+	|	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 1 y z = total (x) 300 (y + 1) z
 
 total x 300 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
-	| verifyBlank (x !! y) = total (x) 2 (y + 1) z
-  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
+	|	verifyBlank (x !! y) = total (x) 2 (y + 1) z
+	|	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 2 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
-	| verifyBlank (x !! y) = total (x) 2 (y + 1) z
-  | verifyFPA (x !! y) = total (x) 3 (y + 1) z
-  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
+	|	verifyBlank (x !! y) = total (x) 2 (y + 1) z
+	|	verifyFPA (x !! y) = total (x) 3 (y + 1) z
+	|	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 3 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
-	| verifyBlank (x !! y) = total (x) 301 (y) z
-  | verifyMachTaskParseError (x !! y) = total (x) 4 y z
-  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
+	|	verifyBlank (x !! y) = total (x) 301 (y) z
+	|	verifyMachTaskParseError (x !! y) = total (x) 4 y z
+	|	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 4 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
-	| verifyMachTaskInvalid (x !! y) = total (x) 301 (y + 1) (Constraints.ConstraintTup ((fPA z)++[getMachTask (x !! y)]) (fM z) (tNt z) (mP z) (tNP z) [])
-  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["invalid machine/task"]
+	|	verifyMachTaskInvalid (x !! y) = total (x) 301 (y + 1) (Constraints.ConstraintTup ((fPA z)++[getMachTask (x !! y)]) (fM z) (tNt z) (mP z) (tNP z) [])
+	|	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["invalid machine/task"]
 
 total x 301 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
-	| verifyBlank (x !! y) = total (x) 302 (y + 1) z
-  | verifyMachTaskParseError (x !! y) = total (x) 4 y z
-  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
+	|	verifyBlank (x !! y) = total (x) 302 (y + 1) z
+	|	verifyMachTaskParseError (x !! y) = total (x) 4 y z
+	|	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 302 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
-	| verifyBlank (x !! y) = total (x) 302 (y + 1) z
-  | verifyMachTaskParseError (x !! y) = total (x) 4 y z
-  | verifyFM (x !! y) = total (x) 5 (y + 1) z
-  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
+	|	verifyBlank (x !! y) = total (x) 302 (y + 1) z
+	|	verifyMachTaskParseError (x !! y) = total (x) 4 y z
+	|	verifyFM (x !! y) = total (x) 5 (y + 1) z
+	|	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 5 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
-	| verifyBlank (x !! y) = total (x) 303 (y) z
-  | verifyMachTaskParseError (x !! y) = total (x) 6 y z
-  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
+	|	verifyBlank (x !! y) = total (x) 303 (y) z
+	|	verifyMachTaskParseError (x !! y) = total (x) 6 y z
+	|	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 6 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
-	| verifyMachTaskInvalid (x !! y) = total (x) 303 (y + 1) (Constraints.ConstraintTup (fPA z) ((fM z)++[getMachTask (x !! y)]) (tNt z) (mP z) (tNP z) [])
-  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["invalid machine/task"]
+	|	verifyMachTaskInvalid (x !! y) = total (x) 303 (y + 1) (Constraints.ConstraintTup (fPA z) ((fM z)++[getMachTask (x !! y)]) (tNt z) (mP z) (tNP z) [])
+	|	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["invalid machine/task"]
 
 total x 303 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
@@ -87,13 +87,13 @@ total x 8 y z
 total x 305 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 	| verifyBlank (x !! y) = total (x) 306 (y + 1) z
-  | verifyMachTaskParseError (x !! y) = total (x) 8 y z
+  | verifyTaskTaskParseError (x !! y) = total (x) 8 y z
   |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 306 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 	| verifyBlank (x !! y) = total (x) 306 (y + 1) z
-  | verifyMachTaskParseError (x !! y) = total (x) 8 y z
+  | verifyTaskTaskParseError (x !! y) = total (x) 8 y z
   | verifyMP (x !! y) = total (x) 9 (y + 1) z
   |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
