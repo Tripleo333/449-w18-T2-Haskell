@@ -30,7 +30,7 @@ verifyMachTaskParseError :: String -> Bool
 verifyMachTaskParseError x = x =~ "^\\([0-9]+,[A-Z]\\)[ \t]*$" :: Bool
 
 verifyMachTaskInvalid :: String -> Bool
-verifyMachTaskInvalid x = x =~ "^\\([0-9],[A-H]\\)[ \t]*$" :: Bool
+verifyMachTaskInvalid x = x =~ "^\\([1-8],[A-H]\\)[ \t]*$" :: Bool
 
 getMachTask :: String -> (Int, Char)
 getMachTask x = (digitToInt (x !! 1), x !! 3)

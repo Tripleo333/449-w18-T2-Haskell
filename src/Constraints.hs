@@ -9,10 +9,13 @@ data ConstraintTup = ConstraintTup {
   fM :: [(Int, Char)],
   tNt :: [(Char,Char)],
   mP :: [[Int]],
-  tNP :: [(Char, Char, Int)]
---  error :: [String]
+  tNP :: [(Char, Char, Int)],
+  error :: [String]
 } deriving (Show)
 
+
+addFPA :: (Int,Char) -> [(Int,Char)] -> Bool
+addFPA (x,y) z = ([a | a <- z, (fst a) == x, (snd a) == y] == [])
 
 -- returns True if the state meets all hard constraints, returns False if the state does not meet
 -- at least one of the hard constraints
