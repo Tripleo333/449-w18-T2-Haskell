@@ -21,7 +21,7 @@ verifyMP :: String -> Bool
 verifyMP x = x =~ "^machine penalties:[ \t]*$" :: Bool
 
 verifyTNP :: String -> Bool
-verifyTNP x = x =~ "^too-near penalities[ \t]$" :: Bool
+verifyTNP x = x =~ "^too-near penalities[ \t]*$" :: Bool
 
 verifyBlank :: String -> Bool
 verifyBlank x = x =~ "^[ \t]*$" :: Bool
@@ -66,10 +66,10 @@ getMachPenaltyLine :: String -> [Int]
 getMachPenaltyLine x = map read (words x)
 
 verifyTooNearPenaltiesParseError :: String -> Bool
-verifyTooNearPenaltiesParseError x = x =~ "^\\([A-Z],[A-Z],([.]+)\\)[ \t]*$" :: Bool
+verifyTooNearPenaltiesParseError x = x =~ "^\\([A-Z],[A-Z],(.+)\\)[ \t]*$" :: Bool
 
 verifyTooNearPenaltiesInvalidTask :: String -> Bool
-verifyTooNearPenaltiesInvalidTask x = x=~ "^\\([A-H],[A-H],([.]+)\\)[ \t]*$"
+verifyTooNearPenaltiesInvalidTask x = x=~ "^\\([A-H],[A-H],(.+)\\)[ \t]*$"
 
 verifyTooNearPenaltiesInvalidPenalty :: String -> Bool
 verifyTooNearPenaltiesInvalidPenalty x = x=~ "^\\([A-H],[A-H],[0-9]+\\)[ \t]*$"
