@@ -1,3 +1,5 @@
+module Test where
+
 import Text.Regex.Posix
 import Data.Char
 
