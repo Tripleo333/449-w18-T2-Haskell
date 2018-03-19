@@ -47,6 +47,7 @@ total x 302 y z
 	| verifyBlank (x !! y) = total (x) 302 (y + 1) z
   | verifyMachTaskParseError (x !! y) = total (x) 4 y z
   | verifyFM (x !! y) = total (x) 5 (y + 1) z
+  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 5 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
@@ -70,6 +71,7 @@ total x 304 y z
 	| verifyBlank (x !! y) = total (x) 304 (y + 1) z
   | verifyMachTaskParseError (x !! y) = total (x) 6 y z
   | verifyTNT (x !! y) = total (x) 7 (y + 1) z
+  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 total x 7 y z
 	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
@@ -93,6 +95,7 @@ total x 306 y z
 	| verifyBlank (x !! y) = total (x) 306 (y + 1) z
   | verifyMachTaskParseError (x !! y) = total (x) 8 y z
   | verifyMP (x !! y) = total (x) 9 (y + 1) z
+  |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 
 -- Each set of three states is a copy and paste to ensure exactly 8 lines are read (excluding blank lines)
 -- LINE 1
