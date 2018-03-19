@@ -2,6 +2,7 @@ module Example where
 
 import Constraints
 import Data.List
+import Total
 
 removeLetter :: [Char] -> Char -> [Char]
 removeLetter x y = [a | a <- x, a /= y]
@@ -19,7 +20,9 @@ branchEnum s c = getReturn [x | x <- s, meetsHardConstr (fPA c) (fM c) (tNt c) x
 
 -- State -> Length (index of next X) -> Constraints -> Current Global Minimum -> Chars not yet used in State -> Final State
 branch :: [Char] -> Int -> Constraints.ConstraintTup -> Int -> [Char] -> [Char]
-branch w 8 y z a = w
+branch w 8 y z a
+    | not ( meetsHardConstr (fPA y) (fM y) (tNt y) w ) = "XXXXXXXX"
+	| otherwise = w
 branch w x y z a
     -- If the penalty value of state is >= current global minimum OR it does not meet hard constraints, return char list containing only '0'
     | not ( meetsHardConstr (fPA y) (fM y) (tNt y) w ) = "XXXXXXXX"
@@ -38,10 +41,3 @@ getReturn (x:xs:[]) y
     | ( calcPenalty (mP y) (tNP y) x ) < ( calcPenalty (mP y) (tNP y) ( getReturn [xs] y ) ) = x
     | otherwise = getReturn [xs] y
 getReturn x y = x !! 0
---getReturn x y = x !! 0
-
-{-
-getReturn :: [[Char]] -> Constraints.ConstraintsTup -> [Char]
-getReturn (x:xs) y = [z | z <- x:xs, calcPenalty (mP y) (tNP y) z < getReturn]
-getReturn x y = []
--}

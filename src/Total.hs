@@ -201,6 +201,7 @@ total x 25 y z
   |	otherwise = Constraints.ConstraintTup [] [] [] [[]] [] ["machine penalty error"]
 
 total x 26 y z
+--	|	y >= (length x) = Constraints.ConstraintTup [] [] [] [[]] [] ["Error while parsing input file"]
 	| y >= (length x) = z
 	| verifyBlank (x !! y) = total (x) 26 (y + 1) z
   | verifyTooNearPenaltiesParseError (x !! y) = total (x) 27 (y) z
